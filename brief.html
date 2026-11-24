@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mixwise startup brief: lightweight MMM for app and SaaS growth teams</title>
+<meta name="description" content="Startup brief for Mixwise, a fictional marketing mix modelling product: problem, target customer, positioning, GTM, INR/AUD pricing, key metrics and risks.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%227%22 fill=%22%237c9cff%22/%3E%3Cpath d=%22M7 22l6-8 5 5 7-10%22 stroke=%22%230d1020%22 stroke-width=%223%22 fill=%22none%22/%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="nav"><div class="wrap">
+  <a class="logo" href="index.html">mix<span>wise</span></a>
+  <div class="spacer"></div>
+  <nav><a href="index.html">Product</a><a class="on" href="brief.html">Startup brief</a><a class="keep" href="demo.html">Live demo</a></nav>
+</div></header>
+<main class="wrap brief" style="max-width:860px;padding-top:30px">
+<span class="eyebrow">Startup brief · fictional concept</span>
+<h1 style="font-size:40px;letter-spacing:-.03em;margin:0">Mixwise: marketing mix modelling for growth teams without a data-science bench</h1>
+<p class="muted">A one-page investor and operator brief. All figures are assumptions for a concept, not market research results.</p>
+
+<h2>1. Problem</h2>
+<ul>
+  <li>Since Apple's App Tracking Transparency (2021) and continued cookie loss, user-level attribution undercounts some channels and double-counts others. Each ad platform self-reports conversions using its own attribution window.</li>
+  <li>Growth teams still have to split a monthly budget across Meta, Google, YouTube, creators and app-store ads, and defend that split to a CFO or board.</li>
+  <li>MMM answers the question with aggregate weekly data and no user tracking. But the open-source options (Meta's Robyn, Google's Meridian, PyMC-Marketing) need Python or R skills and careful setup, and consultancies price for enterprise.</li>
+</ul>
+
+<h2>2. Target customer</h2>
+<p><b>ICP:</b> Series A–C consumer subscription apps and SMB SaaS in India and Australia. They spend ₹5 L–₹1 Cr (A$10k–200k) a month across 4+ paid channels, have at least 12 months of weekly data, and have no in-house data scientist.</p>
+<p><b>Persona: "Priya, Head of Growth"</b> at a 60-person fintech app in Bengaluru. She owns CAC and the paid budget. Her monthly pain is a finance review where Meta, Google and AppsFlyer numbers don't reconcile. Her win is a budget plan she can defend, backed by a test that proves it.</p>
+<p><b>Secondary:</b> performance agencies that want an independent incrementality view to retain clients.</p>
+
+<h2>3. Positioning</h2>
+<p class="card">For growth leads at app and SaaS companies who can't trust platform-reported ROAS, <b>Mixwise</b> is a self-serve marketing mix model that shows each channel's true incremental return and where spend is saturating. Unlike open-source MMM libraries, it needs no code. Unlike agency MMM, it refreshes weekly at a SaaS price. And unlike multi-touch attribution, it needs no user-level tracking.</p>
+<p><b>Message pillars:</b> (1) Incremental, not attributed. (2) Answers in minutes, not quarters. (3) Proven with experiments: every major recommendation comes with a lift-test plan.</p>
+
+<h2>4. Product (MVP shown in the <a href="demo.html">live demo</a>)</h2>
+<ul>
+  <li>CSV upload: weekly KPI, spend by channel and event flags (Diwali or festive sales, IPL, EOFY, Black Friday)</li>
+  <li>Model: geometric adstock + Hill saturation per channel and non-negative ridge regression with trend and seasonality. Carry-over and saturation are found by grid search</li>
+  <li>Validation: 13-week holdout error, bootstrap ROI ranges, and a lift-test agreement check</li>
+  <li>Outputs: channel scorecard with Scale / Hold / Trim, response curves, a guardrailed budget optimiser and a plain-English readout</li>
+  <li>Roadmap: connectors (Meta, Google Ads, Apple Search Ads, AppsFlyer, GA4), Bayesian priors from lift tests, geo-test designer, Slack weekly digest</li>
+</ul>
+
+<h2>5. Go-to-market</h2>
+<ol>
+  <li><b>Design partners (months 0–3):</b> 10 apps via founder networks, growth communities (e.g. GrowthX in India, Startmate in Australia) and LinkedIn content. Free for 3 months in exchange for a lift test and a case study.</li>
+  <li><b>Content-led demand (months 3–9):</b> a free "MMM readiness checker" and a public demo (this page). Monthly teardown posts like "Where Indian fintech apps over-spend on Meta", built on synthetic or anonymised data. A webinar with a performance agency.</li>
+  <li><b>Agency channel (months 6–12):</b> white-label seats for performance agencies at a 20% revenue share, so their client reviews feature Mixwise readouts.</li>
+  <li><b>Expansion:</b> per-channel and per-market add-ons, then SEA markets with similar app ecosystems.</li>
+</ol>
+
+<h2>6. Pricing</h2>
+<div class="tablewrap"><table>
+<tr><th>Plan</th><th>India (₹/mo)</th><th>Australia (A$/mo)</th><th>Includes</th></tr>
+<tr><td>Starter</td><td>₹14,999</td><td>A$349</td><td>5 channels, monthly refresh, 2 seats</td></tr>
+<tr><td>Growth</td><td>₹39,999</td><td>A$899</td><td>12 channels, weekly refresh, optimiser, lift-test calibration, 6 seats</td></tr>
+<tr><td>Scale</td><td>₹89,999</td><td>A$1,999</td><td>30 channels, geo-test design, analyst hours, 20 seats</td></tr>
+</table></div>
+<p class="muted">20% off for annual billing. Pricing logic: the Growth plan costs under 1% of the ICP's monthly media spend. Moving even 5% of budget to better channels pays for it many times over (an assumption to validate with design partners).</p>
+
+<h2>7. Key metrics</h2>
+<ul>
+  <li><b>North star:</b> media spend under Mixwise recommendations each month (₹ / A$)</li>
+  <li><b>Activation:</b> first model fitted with holdout MAPE under 10% within 7 days of signup</li>
+  <li><b>Value proof:</b> share of accounts running at least one lift test that agrees with the model within ±30%</li>
+  <li><b>Revenue:</b> MRR, net revenue retention (target 110%+), CAC payback (target under 9 months)</li>
+  <li><b>Engagement:</b> weekly readout opens and optimiser runs per account</li>
+</ul>
+
+<h2>8. Competition</h2>
+<ul>
+  <li><b>Open source:</b> Robyn (MIT), Meridian (Apache-2.0) and PyMC-Marketing are free and powerful, but need code. Mixwise could build on them later.</li>
+  <li><b>Mobile measurement partners and platform tools:</b> strong for attribution, but tied to their own data and incentives.</li>
+  <li><b>Agencies and consultancies:</b> high-touch, quarterly and expensive.</li>
+  <li><b>Spreadsheets:</b> the real incumbent. Win by being as easy to use and visibly more rigorous.</li>
+</ul>
+
+<h2>9. Risks and how we'd handle them</h2>
+<ul>
+  <li><b>Model wrongness:</b> MMM can mis-assign effects when channels move together. Mitigation: holdout and bootstrap reporting, a ground-truth check on synthetic data (see demo), and lift-test calibration before big moves.</li>
+  <li><b>Data sparsity:</b> young apps may have too little spend variation. Mitigation: a readiness checker and planned spend "flighting" to create variation.</li>
+  <li><b>Trust:</b> CFOs are sceptical of black boxes. Mitigation: transparent maths, exportable decompositions and plain-English caveats.</li>
+</ul>
+<p class="note" style="margin:30px 0">Concept by Yash Sarkar for a marketing portfolio. Mixwise and Tallyo are fictional; all data in the demo is synthetic.</p>
+</main>
+<footer><div class="wrap"><a href="index.html">Landing page</a> · <a href="demo.html">Live demo</a> · <a href="https://github.com/yashsarkar1806-creator/mixwise-mmm-lab">Source (MIT)</a></div></footer>
+</body>
+</html>

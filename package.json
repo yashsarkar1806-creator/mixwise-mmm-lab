@@ -1,0 +1,8 @@
+{
+  "name": "mixwise-mmm-lab",
+  "version": "1.0.0",
+  "description": "Fictional tech startup concept + live in-browser marketing mix model: adstock, saturation, incremental ROI, bootstrap ranges, budget optimiser.",
+  "scripts": { "test": "node --test tests/*.test.js", "start": "python3 -m http.server 8080" },
+  "license": "MIT",
+  "private": true
+}

@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mixwise live demo: in-browser marketing mix model</title>
+<meta name="description" content="Fit a marketing mix model in your browser: adstock, saturation curves, incremental ROI by channel, bootstrap ranges, a budget optimiser and a lift-test check. Synthetic demo data.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%227%22 fill=%22%237c9cff%22/%3E%3Cpath d=%22M7 22l6-8 5 5 7-10%22 stroke=%22%230d1020%22 stroke-width=%223%22 fill=%22none%22/%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="nav"><div class="wrap">
+  <a class="logo" href="index.html">mix<span>wise</span></a>
+  <div class="spacer"></div>
+  <nav><a href="index.html">Product</a><a href="brief.html">Startup brief</a><a class="keep on" href="demo.html">Live demo</a></nav>
+</div></header>
+<main class="wrap">
+<section style="padding-top:34px">
+  <span class="eyebrow">Live demo · runs entirely in your browser</span>
+  <h2>Marketing mix model lab</h2>
+  <p class="muted" style="max-width:820px">The demo loads 156 weeks of <b>synthetic</b> data for <b>Tallyo</b>, a fictional budgeting app. The KPI is new paid subscribers and there are five paid channels. Because the data is synthetic, the true effect of each channel is known, so you can see how close the model gets. You can also upload your own weekly CSV.</p>
+  <div class="card">
+    <div class="row">
+      <div><label for="market">Demo market</label><select id="market"><option value="IN">India (₹, festive sale + IPL flags)</option><option value="AU">Australia (A$, EOFY + Black Friday flags)</option></select></div>
+      <div><label for="seed">Synthetic seed</label><input id="seed" type="number" value="99" min="1" max="9999"></div>
+      <div><label for="value">Margin per subscriber (12-mo)</label><input id="value" type="number" min="0.01" step="any"></div>
+      <div><label for="target">Target ROI (break-even = 1.0)</label><input id="target" type="number" value="1" min="0.1" step="0.1"></div>
+      <div><label for="boot">Bootstrap runs</label><select id="boot"><option value="0">Off</option><option value="100" selected>100</option><option value="300">300</option></select></div>
+    </div>
+    <div class="row" style="margin-top:12px">
+      <button class="btn" id="run">Fit model</button>
+      <button class="btn ghost" id="regen">Load synthetic demo</button>
+      <label class="btn ghost" style="margin:0;text-align:center;color:var(--ink)">Upload CSV<input id="file" type="file" accept=".csv,text/csv" hidden></label>
+      <button class="btn ghost" id="dl-data">Download data CSV</button>
+    </div>
+    <p class="note" style="margin-top:12px">CSV format: <code>date,kpi,spend_meta,spend_google_search,…,ctrl_festive_sale</code>, one row per week, at least 26 weeks (52+ recommended). Columns starting <code>spend_</code> are channels. Columns starting <code>ctrl_</code> are events or controls. Download the demo data to see the shape.</p>
+    <div class="status" id="status"></div>
+  </div>
+</section>
+
+<section id="out" style="display:none;padding-top:0">
+  <div class="grid g4" id="kpis"></div>
+
+  <div class="grid g2" style="margin-top:16px">
+    <div class="card"><h3>Actual vs fitted</h3><p class="muted" style="font-size:13px">The shaded zone is the holdout. Its fit uses only the earlier weeks.</p><canvas id="c-fit" height="260"></canvas><div class="legend"><span><i style="background:#eef0ff"></i>Actual</span><span><i style="background:#7c9cff"></i>Fitted</span><span><i style="background:#ffb547"></i>Holdout forecast</span></div></div>
+    <div class="card"><h3>What drove the KPI each week</h3><p class="muted" style="font-size:13px">Base demand (trend, seasonality, events) plus each channel's incremental effect.</p><canvas id="c-decomp" height="260"></canvas><div class="legend" id="lg-decomp"></div></div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>Channel scorecard</h3>
+    <div class="tablewrap"><table id="tbl"></table></div>
+    <p class="note">ROI = incremental subscribers × margin ÷ spend. Next-dollar ROI is the slope of the response curve at the average weekly spend of the last 13 weeks. Verdicts: <b>Scale</b> if next-dollar ROI ≥ 1.3× target, <b>Trim</b> if below 0.9× target, otherwise <b>Hold</b>.</p>
+  </div>
+
+  <div class="grid g2" style="margin-top:16px">
+    <div class="card"><h3>Share of spend vs share of effect</h3><canvas id="c-share" height="260"></canvas><div class="legend"><span><i style="background:#5b6299"></i>Spend share</span><span><i style="background:#40d9a8"></i>Effect share</span></div></div>
+    <div class="card"><h3>Response curves (weekly)</h3><p class="muted" style="font-size:13px">Incremental subscribers a week at a steady weekly spend. Dots mark current spend.</p><canvas id="c-curves" height="260"></canvas><div class="legend" id="lg-curves"></div></div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>Budget optimiser</h3>
+    <div class="row">
+      <div><label for="budget">Weekly budget</label><input id="budget" type="number" min="0" step="any"></div>
+      <div><label for="minpct">Each channel minimum (% of current)</label><input id="minpct" type="number" value="50" min="0" max="100"></div>
+      <div><label for="maxpct">Each channel maximum (% of current)</label><input id="maxpct" type="number" value="200" min="100" max="500"></div>
+      <div style="flex:0"><button class="btn" id="opt">Optimise</button></div>
+    </div>
+    <div class="err" id="opt-err"></div>
+    <div class="tablewrap"><table id="opt-tbl"></table></div>
+    <div id="opt-sum" class="grid g3" style="margin-top:12px"></div>
+    <p class="note">The guardrails limit how far each channel can move from current spend. Response curves outside the historical range are extrapolations, so test big moves before rolling them out.</p>
+  </div>
+
+  <div class="grid g2" style="margin-top:16px">
+    <div class="card">
+      <h3>Lift-test check</h3>
+      <p class="muted" style="font-size:13px">Have a geo holdout or platform conversion-lift result? Enter its cost per incremental subscriber and see whether the model agrees.</p>
+      <div class="row"><div><label for="lift-ch">Channel</label><select id="lift-ch"></select></div><div><label for="lift-cost">Test cost per incremental</label><input id="lift-cost" type="number" min="0.01" step="any"></div><div style="flex:0"><button class="btn" id="lift">Compare</button></div></div>
+      <div id="lift-out" style="margin-top:10px"></div>
+    </div>
+    <div class="card" id="truth-card">
+      <h3>Ground-truth check (synthetic data only)</h3>
+      <p class="muted" style="font-size:13px">The true ROI used to generate the data, next to the model's estimate. Expect some misses, as real MMMs have them too. That is why lift tests matter.</p>
+      <div class="tablewrap"><table id="truth"></table></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <div class="row" style="align-items:center"><h3 style="flex:3;margin:0">Plain-English readout</h3><div style="flex:0 0 auto;display:flex;gap:8px;flex-wrap:wrap"><button class="btn ghost small" id="copy">Copy</button><button class="btn ghost small" id="dl-md">Download .md</button><button class="btn ghost small" id="dl-decomp">Decomposition CSV</button></div></div>
+    <textarea id="readout" readonly style="margin-top:10px"></textarea>
+  </div>
+</section>
+</main>
+<footer><div class="wrap">Synthetic data, fictional brand (Tallyo) and fictional startup (Mixwise). Method: geometric adstock, Hill saturation (shape 1), non-negative ridge regression, coordinate grid search for carry-over and half-saturation, residual block bootstrap. Inspired by open-source MMMs <a href="https://github.com/facebookexperimental/Robyn">Robyn</a> and <a href="https://github.com/google/meridian">Meridian</a>. <a href="https://github.com/yashsarkar1806-creator/mixwise-mmm-lab">Source (MIT)</a></div></footer>
+<div id="debug"></div>
+<script src="lib/mmm.js"></script>
+<script src="lib/site.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

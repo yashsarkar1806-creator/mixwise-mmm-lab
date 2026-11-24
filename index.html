@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mixwise: marketing mix modelling for app and SaaS growth teams (concept)</title>
+<meta name="description" content="Mixwise is a fictional startup concept: a lightweight marketing mix model that shows which paid channels really drive subscribers, where spend is saturating, and how to reallocate budget. INR and AUD pricing.">
+<meta property="og:title" content="Mixwise: stop trusting last-click">
+<meta property="og:description" content="Marketing mix modelling for app and SaaS growth teams in India and Australia. Fictional concept with a working demo.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%227%22 fill=%22%237c9cff%22/%3E%3Cpath d=%22M7 22l6-8 5 5 7-10%22 stroke=%22%230d1020%22 stroke-width=%223%22 fill=%22none%22/%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Mixwise (concept)","applicationCategory":"BusinessApplication","operatingSystem":"Web","offers":{"@type":"AggregateOffer","priceCurrency":"INR","lowPrice":"14999","highPrice":"89999"}}</script>
+</head>
+<body>
+<header class="nav"><div class="wrap">
+  <a class="logo" href="index.html">mix<span>wise</span></a>
+  <div class="spacer"></div>
+  <nav><a href="#how">How it works</a><a href="#pricing">Pricing</a><a href="brief.html">Startup brief</a><a class="keep" href="demo.html" data-cta="nav_demo">Live demo</a></nav>
+  <a class="btn small" href="#pilot" data-cta="nav_pilot">Join the pilot</a>
+</div></header>
+
+<main>
+<section class="hero"><div class="wrap">
+  <span class="eyebrow">Fictional startup concept · working demo</span>
+  <h1 id="headline">Your ad platforms all claim the same subscriber. Find out which channel actually earned it.</h1>
+  <p class="lead">Mixwise is a lightweight marketing mix model (MMM) for consumer-app and SaaS growth teams spending ₹5 L–₹1 Cr (A$10k–200k) a month. Upload weekly spend and signups. Get incremental ROI by channel, saturation curves and a budget plan, with no cookies or user-level tracking needed.</p>
+  <div class="row" style="max-width:520px;margin-top:22px">
+    <a class="btn" href="demo.html" data-cta="hero_demo">Try the live model →</a>
+    <a class="btn ghost" href="#pilot" data-cta="hero_pilot">Become a design partner</a>
+  </div>
+  <div class="grid g4" style="margin-top:40px">
+    <div class="card kpi"><div class="v">5 channels</div><div class="l">in the demo: Meta, Google Search, YouTube, Creators and Apple Search Ads</div></div>
+    <div class="card kpi"><div class="v">156 wks</div><div class="l">of weekly data in the demo, synthetic app with known true effects</div></div>
+    <div class="card kpi"><div class="v">&lt;1 s</div><div class="l">to fit in your browser; your data never leaves the page</div></div>
+    <div class="card kpi"><div class="v">₹ / A$</div><div class="l">pricing, festive and EOFY seasonality built into the base</div></div>
+  </div>
+</div></section>
+
+<section id="problem"><div class="wrap grid g2">
+  <div>
+    <h2>Last-click is broken, and big-brand MMM is out of reach</h2>
+    <p class="muted">Since iOS 14.5, SKAdNetwork and cookie loss, Meta, Google and Apple Search Ads each report their own version of the truth. Add them up and you get more signups than you actually had. Open-source MMM tools (Robyn, Meridian, PyMC-Marketing) are excellent, but they need a data scientist and weeks of setup. Agencies quote enterprise budgets.</p>
+  </div>
+  <div class="card">
+    <h3>Who it's for</h3>
+    <ul class="muted">
+      <li>Growth leads at Series A–C consumer apps (fintech, edtech, health, subscriptions) in India and Australia</li>
+      <li>SaaS marketers running 4+ paid channels with no analyst</li>
+      <li>Founders who need to defend a budget split to their board</li>
+    </ul>
+  </div>
+</div></section>
+
+<section id="how"><div class="wrap">
+  <h2>How it works</h2>
+  <div class="grid g4 steps">
+    <div class="card"><h3>Upload</h3><p class="muted">A weekly CSV with date, KPI, spend per channel and optional event flags (Diwali sale, EOFY, IPL, Black Friday).</p></div>
+    <div class="card"><h3>Model</h3><p class="muted">Adstock captures carry-over and Hill curves capture diminishing returns. A ridge regression with non-negative media effects then separates base demand from paid media.</p></div>
+    <div class="card"><h3>Validate</h3><p class="muted">Holdout error on the latest 13 weeks, bootstrap ROI ranges, and a check against your geo or platform lift tests.</p></div>
+    <div class="card"><h3>Act</h3><p class="muted">A Scale / Hold / Trim verdict per channel, a budget optimiser for the same spend, and a readout you can paste into a deck.</p></div>
+  </div>
+</div></section>
+
+<section id="pricing"><div class="wrap">
+  <div class="row" style="align-items:center;margin-bottom:16px">
+    <h2 style="flex:3">Pricing</h2>
+    <div class="toggle" id="cur" style="flex:0"><button data-c="INR" class="on">₹ INR</button><button data-c="AUD">A$ AUD</button></div>
+    <div class="toggle" id="bill" style="flex:0"><button data-b="monthly" class="on">Monthly</button><button data-b="annual">Annual −20%</button></div>
+  </div>
+  <div class="grid g3" id="plans"></div>
+  <p class="note" style="margin-top:14px">Prices are exclusive of GST and are illustrative for a concept. Design partners get 3 months free in exchange for a lift test and a case study.</p>
+</div></section>
+
+<section id="pilot"><div class="wrap grid g2">
+  <div>
+    <h2>Join the design-partner pilot</h2>
+    <p class="muted">We're looking for 10 growth teams with at least 12 months of weekly data. This is a portfolio concept, so the form scores your fit right here and sends nothing.</p>
+    <div class="card" id="result" style="display:none"></div>
+  </div>
+  <form class="card" id="leadform" novalidate>
+    <label for="f-name">Name</label><input id="f-name" name="name" autocomplete="name"><div class="err" data-e="name"></div>
+    <label for="f-email">Work email</label><input id="f-email" name="email" type="email" autocomplete="email"><div class="err" data-e="email"></div>
+    <label for="f-company">Company</label><input id="f-company" name="company"><div class="err" data-e="company"></div>
+    <label for="f-role">Role</label><input id="f-role" name="role" placeholder="e.g. Head of Growth">
+    <div class="row">
+      <div><label for="f-spend">Monthly paid media</label><select id="f-spend" name="spend"></select><div class="err" data-e="spend"></div></div>
+      <div><label for="f-ch">Paid channels</label><input id="f-ch" name="channels" type="number" min="1" max="30" value="4"></div>
+      <div><label for="f-hist">Months of data</label><input id="f-hist" name="history" type="number" min="0" max="120" value="18"></div>
+    </div>
+    <button class="btn" style="margin-top:14px;width:100%">Check my fit</button>
+  </form>
+</div></section>
+</main>
+
+<footer><div class="wrap">Mixwise is a fictional startup concept by Yash Sarkar for a marketing portfolio. All numbers, brands and the demo dataset are synthetic. · <a href="brief.html">Startup brief</a> · <a href="demo.html">Live demo</a> · <a href="https://github.com/yashsarkar1806-creator/mixwise-mmm-lab">Source (MIT)</a></div></footer>
+<div id="debug"></div>
+<script src="lib/site.js"></script>
+<script src="landing.js"></script>
+</body>
+</html>
